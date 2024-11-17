@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nextjs-grpc-frontend
+spec:
+  selector:
+    matchLabels:
+      app: nextjs-grpc-frontend
+  template:
+    metadata:
+      labels:
+        app: nextjs-grpc-frontend
+    spec:
+      containers:
+      - name: nextjs-grpc-frontend
+        image: https://quay.io/omidiyanto/nextjs-grpc:frontend
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nextjs-grpc-frontend
+spec:
+  selector:
+    app: nextjs-grpc-frontend
+  ports:
+  - port: 3000
+    targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nextjs-grpc-frontend
+  labels:
+    name: nextjs-grpc-frontend
+spec:
+  rules:
+  - host: nextjs-grpc.omidiyanto.my.id
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: nextjs-grpc-frontend
+            port:
+              number: 3000
