@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: nextjs-grpc-frontend
-        image: https://quay.io/omidiyanto/nextjs-grpc:frontend
+        image: quay.io/omidiyanto/nextjs-grpc:frontend
         resources:
           limits:
             memory: "128Mi"
@@ -40,7 +40,7 @@ metadata:
     name: nextjs-grpc-frontend
 spec:
   rules:
-  - host: nextjs-grpc.omidiyanto.my.id
+  - host: next-grpc-app.omidiyanto.my.id
     http:
       paths:
       - pathType: Prefix
