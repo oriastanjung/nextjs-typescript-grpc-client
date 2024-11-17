@@ -1,0 +1,12 @@
+syntax="proto3";
+
+package auth;
+option go_package = "github.com/oriastanjung/grpc_server/proto/auth";
+
+import "auth/register.proto";
+import "auth/login.proto";
+
+service AuthServiceRoutes{
+    rpc SignUpAdmin(register.SignUpRequest) returns (register.SignUpResponse){};
+    rpc LoginAdmin(login.LoginRequest) returns (login.LoginResponse){};
+}
