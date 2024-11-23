@@ -2,7 +2,7 @@
 import { clientAuth } from "@/grpc/grpcClient";
 import { LoginRequest, LoginResponse } from "@/proto/auth/login";
 import { ServiceError } from "@grpc/grpc-js";
-export async function LoginAdminRPC(
+export async function LoginUser(
   email: string,
   password: string
 ): Promise<LoginResponse> {
@@ -12,7 +12,7 @@ export async function LoginAdminRPC(
       password: password,
     });
 
-    clientAuth.loginAdmin(request, (err: ServiceError | null, response : LoginResponse) => {
+    clientAuth.loginUser(request, (err: ServiceError | null, response : LoginResponse) => {
       if (err) {
         reject(err);
       } else {
@@ -21,3 +21,6 @@ export async function LoginAdminRPC(
     });
   });
 }
+
+
+

@@ -17,6 +17,17 @@ import {
   type ServiceError,
   type UntypedServiceImplementation,
 } from "@grpc/grpc-js";
+import { Empty } from "../google/protobuf/empty";
+import {
+  LoginGoogleRequest,
+  LoginGoogleResponse,
+  RequestForgetPasswordRequest,
+  RequestForgetPasswordResponse,
+  ResetPasswordByTokenRequest,
+  ResetPasswordByTokenResponse,
+  VerifyUserRequest,
+  VerifyUserResponse,
+} from "./addition";
 import { LoginRequest, LoginResponse } from "./login";
 import { SignUpRequest, SignUpResponse } from "./register";
 
@@ -42,11 +53,85 @@ export const AuthServiceRoutesService = {
     responseSerialize: (value: LoginResponse) => Buffer.from(LoginResponse.encode(value).finish()),
     responseDeserialize: (value: Buffer) => LoginResponse.decode(value),
   },
+  signUpUser: {
+    path: "/auth.AuthServiceRoutes/SignUpUser",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: SignUpRequest) => Buffer.from(SignUpRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => SignUpRequest.decode(value),
+    responseSerialize: (value: SignUpResponse) => Buffer.from(SignUpResponse.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => SignUpResponse.decode(value),
+  },
+  loginUser: {
+    path: "/auth.AuthServiceRoutes/LoginUser",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: LoginRequest) => Buffer.from(LoginRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => LoginRequest.decode(value),
+    responseSerialize: (value: LoginResponse) => Buffer.from(LoginResponse.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => LoginResponse.decode(value),
+  },
+  verifyUser: {
+    path: "/auth.AuthServiceRoutes/VerifyUser",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: VerifyUserRequest) => Buffer.from(VerifyUserRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => VerifyUserRequest.decode(value),
+    responseSerialize: (value: VerifyUserResponse) => Buffer.from(VerifyUserResponse.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => VerifyUserResponse.decode(value),
+  },
+  requestForgetPassword: {
+    path: "/auth.AuthServiceRoutes/RequestForgetPassword",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: RequestForgetPasswordRequest) =>
+      Buffer.from(RequestForgetPasswordRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => RequestForgetPasswordRequest.decode(value),
+    responseSerialize: (value: RequestForgetPasswordResponse) =>
+      Buffer.from(RequestForgetPasswordResponse.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => RequestForgetPasswordResponse.decode(value),
+  },
+  resetPasswordByToken: {
+    path: "/auth.AuthServiceRoutes/ResetPasswordByToken",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: ResetPasswordByTokenRequest) =>
+      Buffer.from(ResetPasswordByTokenRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => ResetPasswordByTokenRequest.decode(value),
+    responseSerialize: (value: ResetPasswordByTokenResponse) =>
+      Buffer.from(ResetPasswordByTokenResponse.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => ResetPasswordByTokenResponse.decode(value),
+  },
+  loginUserViaGoogle: {
+    path: "/auth.AuthServiceRoutes/LoginUserViaGoogle",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: Empty) => Buffer.from(Empty.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => Empty.decode(value),
+    responseSerialize: (value: LoginGoogleResponse) => Buffer.from(LoginGoogleResponse.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => LoginGoogleResponse.decode(value),
+  },
+  loginUserViaGoogleCallback: {
+    path: "/auth.AuthServiceRoutes/LoginUserViaGoogleCallback",
+    requestStream: false,
+    responseStream: false,
+    requestSerialize: (value: LoginGoogleRequest) => Buffer.from(LoginGoogleRequest.encode(value).finish()),
+    requestDeserialize: (value: Buffer) => LoginGoogleRequest.decode(value),
+    responseSerialize: (value: LoginResponse) => Buffer.from(LoginResponse.encode(value).finish()),
+    responseDeserialize: (value: Buffer) => LoginResponse.decode(value),
+  },
 } as const;
 
 export interface AuthServiceRoutesServer extends UntypedServiceImplementation {
   signUpAdmin: handleUnaryCall<SignUpRequest, SignUpResponse>;
   loginAdmin: handleUnaryCall<LoginRequest, LoginResponse>;
+  signUpUser: handleUnaryCall<SignUpRequest, SignUpResponse>;
+  loginUser: handleUnaryCall<LoginRequest, LoginResponse>;
+  verifyUser: handleUnaryCall<VerifyUserRequest, VerifyUserResponse>;
+  requestForgetPassword: handleUnaryCall<RequestForgetPasswordRequest, RequestForgetPasswordResponse>;
+  resetPasswordByToken: handleUnaryCall<ResetPasswordByTokenRequest, ResetPasswordByTokenResponse>;
+  loginUserViaGoogle: handleUnaryCall<Empty, LoginGoogleResponse>;
+  loginUserViaGoogleCallback: handleUnaryCall<LoginGoogleRequest, LoginResponse>;
 }
 
 export interface AuthServiceRoutesClient extends Client {
@@ -76,6 +161,111 @@ export interface AuthServiceRoutesClient extends Client {
   ): ClientUnaryCall;
   loginAdmin(
     request: LoginRequest,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: LoginResponse) => void,
+  ): ClientUnaryCall;
+  signUpUser(
+    request: SignUpRequest,
+    callback: (error: ServiceError | null, response: SignUpResponse) => void,
+  ): ClientUnaryCall;
+  signUpUser(
+    request: SignUpRequest,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: SignUpResponse) => void,
+  ): ClientUnaryCall;
+  signUpUser(
+    request: SignUpRequest,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: SignUpResponse) => void,
+  ): ClientUnaryCall;
+  loginUser(
+    request: LoginRequest,
+    callback: (error: ServiceError | null, response: LoginResponse) => void,
+  ): ClientUnaryCall;
+  loginUser(
+    request: LoginRequest,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: LoginResponse) => void,
+  ): ClientUnaryCall;
+  loginUser(
+    request: LoginRequest,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: LoginResponse) => void,
+  ): ClientUnaryCall;
+  verifyUser(
+    request: VerifyUserRequest,
+    callback: (error: ServiceError | null, response: VerifyUserResponse) => void,
+  ): ClientUnaryCall;
+  verifyUser(
+    request: VerifyUserRequest,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: VerifyUserResponse) => void,
+  ): ClientUnaryCall;
+  verifyUser(
+    request: VerifyUserRequest,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: VerifyUserResponse) => void,
+  ): ClientUnaryCall;
+  requestForgetPassword(
+    request: RequestForgetPasswordRequest,
+    callback: (error: ServiceError | null, response: RequestForgetPasswordResponse) => void,
+  ): ClientUnaryCall;
+  requestForgetPassword(
+    request: RequestForgetPasswordRequest,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: RequestForgetPasswordResponse) => void,
+  ): ClientUnaryCall;
+  requestForgetPassword(
+    request: RequestForgetPasswordRequest,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: RequestForgetPasswordResponse) => void,
+  ): ClientUnaryCall;
+  resetPasswordByToken(
+    request: ResetPasswordByTokenRequest,
+    callback: (error: ServiceError | null, response: ResetPasswordByTokenResponse) => void,
+  ): ClientUnaryCall;
+  resetPasswordByToken(
+    request: ResetPasswordByTokenRequest,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: ResetPasswordByTokenResponse) => void,
+  ): ClientUnaryCall;
+  resetPasswordByToken(
+    request: ResetPasswordByTokenRequest,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: ResetPasswordByTokenResponse) => void,
+  ): ClientUnaryCall;
+  loginUserViaGoogle(
+    request: Empty,
+    callback: (error: ServiceError | null, response: LoginGoogleResponse) => void,
+  ): ClientUnaryCall;
+  loginUserViaGoogle(
+    request: Empty,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: LoginGoogleResponse) => void,
+  ): ClientUnaryCall;
+  loginUserViaGoogle(
+    request: Empty,
+    metadata: Metadata,
+    options: Partial<CallOptions>,
+    callback: (error: ServiceError | null, response: LoginGoogleResponse) => void,
+  ): ClientUnaryCall;
+  loginUserViaGoogleCallback(
+    request: LoginGoogleRequest,
+    callback: (error: ServiceError | null, response: LoginResponse) => void,
+  ): ClientUnaryCall;
+  loginUserViaGoogleCallback(
+    request: LoginGoogleRequest,
+    metadata: Metadata,
+    callback: (error: ServiceError | null, response: LoginResponse) => void,
+  ): ClientUnaryCall;
+  loginUserViaGoogleCallback(
+    request: LoginGoogleRequest,
     metadata: Metadata,
     options: Partial<CallOptions>,
     callback: (error: ServiceError | null, response: LoginResponse) => void,

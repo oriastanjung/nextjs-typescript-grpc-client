@@ -1,6 +1,6 @@
 import { ServiceError } from "@grpc/grpc-js";
 
-export function ouputGrpcErrorMessage(error: any) {
+export function outputGrpcErrorMessage(error: any) {
   const grpcError = error as ServiceError;
 
   // Extract meaningful error message

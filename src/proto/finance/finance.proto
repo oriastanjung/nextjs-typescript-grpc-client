@@ -1,0 +1,73 @@
+syntax="proto3";
+
+package finance;
+option go_package = "github.com/oriastanjung/grpc_server/proto/finance";
+
+message FinanceModel{
+    string id = 1;
+    string business_id = 2;
+    string title = 3;
+    string type = 4;
+    string product_name = 5;
+    double amount = 6;
+    string notes = 7;
+}
+
+message CreateFinanceRequest{
+    string business_id = 1;
+    string title = 2;
+    string type = 3;
+    string product_name = 4;
+    double amount = 5;
+    string notes = 6;
+}
+
+message CreateFinanceResponse{
+    string message = 1;
+}
+
+message ListFinanceRequest{
+    string business_id = 1;
+}
+
+message ListFinanceResponse{
+    repeated FinanceModel finance = 1;
+}
+
+message GetFinanceRequest{
+    string id = 1;
+}
+
+message GetFinanceResponse{
+    FinanceModel finance = 1;
+}
+
+message UpdateFinanceRequest{
+    string id = 1;
+    string business_id = 2;
+    string title = 3;
+    string type = 4;
+    string product_name = 5;
+    double amount = 6;
+    string notes = 7;
+}
+
+message UpdateFinanceResponse{
+    string message = 1;
+}
+
+message DeleteFinanceRequest{
+    string id = 1;
+}
+
+message DeleteFinanceResponse{
+    string message = 1;
+}
+
+service FinanceRoutesService{
+    rpc CreateFinance(CreateFinanceRequest) returns (CreateFinanceResponse);
+    rpc ListFinance(ListFinanceRequest) returns (ListFinanceResponse);
+    rpc GetFinance(GetFinanceRequest) returns (GetFinanceResponse);
+    rpc UpdateFinance(UpdateFinanceRequest) returns (UpdateFinanceResponse);
+    rpc DeleteFinance(DeleteFinanceRequest) returns (DeleteFinanceResponse);
+}

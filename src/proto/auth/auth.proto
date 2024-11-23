@@ -5,8 +5,17 @@ option go_package = "github.com/oriastanjung/grpc_server/proto/auth";
 
 import "auth/register.proto";
 import "auth/login.proto";
+import "auth/addition.proto";
+import "google/protobuf/empty.proto";
 
 service AuthServiceRoutes{
     rpc SignUpAdmin(register.SignUpRequest) returns (register.SignUpResponse){};
     rpc LoginAdmin(login.LoginRequest) returns (login.LoginResponse){};
+    rpc SignUpUser(register.SignUpRequest) returns (register.SignUpResponse){};
+    rpc LoginUser(login.LoginRequest) returns (login.LoginResponse){};
+    rpc VerifyUser(addition.VerifyUserRequest) returns (addition.VerifyUserResponse){};
+    rpc RequestForgetPassword(addition.RequestForgetPasswordRequest) returns (addition.RequestForgetPasswordResponse){};
+    rpc ResetPasswordByToken(addition.ResetPasswordByTokenRequest) returns (addition.ResetPasswordByTokenResponse){};
+    rpc LoginUserViaGoogle(google.protobuf.Empty) returns (addition.LoginGoogleResponse){};
+    rpc LoginUserViaGoogleCallback(addition.LoginGoogleRequest) returns (login.LoginResponse){};
 }

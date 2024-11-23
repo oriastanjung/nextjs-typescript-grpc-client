@@ -1,0 +1,68 @@
+syntax="proto3";
+
+package business;
+option go_package = "github.com/oriastanjung/grpc_server/proto/business";
+
+import "finance/finance.proto";
+
+message CreateBusinessRequest{
+    string name = 1;
+    string description = 2;
+}
+
+message CreateBusinessResponse{
+    string message = 1;
+}
+
+message UpdateBusinessRequest{
+    string id = 1;
+    string name = 2;
+    string description = 3;
+}
+
+message UpdateBusinessResponse{
+    string message = 1;
+}
+
+message DeleteBusinessRequest{
+    string id = 1;
+}
+
+message DeleteBusinessResponse{
+    string message = 1;
+}
+
+message BusinessModel{
+    string id = 1;
+    string name = 2;
+    string description = 3;
+    string userId = 4;
+    string createdAt = 5;
+    string updatedAt = 6;
+    repeated finance.FinanceModel finance = 7;
+}
+
+
+message GetBusinessRequest{
+    string id = 1;
+}
+
+message GetBusinessResponse{
+    BusinessModel business = 1;
+}
+
+message ListBusinessRequest{
+    string userId = 1;
+}
+
+message ListBusinessResponse{
+    repeated BusinessModel business = 1;
+}
+
+service BusinessRoutesService{
+    rpc CreateBusiness(CreateBusinessRequest) returns (CreateBusinessResponse);
+    rpc UpdateBusiness(UpdateBusinessRequest) returns (UpdateBusinessResponse);
+    rpc DeleteBusiness(DeleteBusinessRequest) returns (DeleteBusinessResponse);
+    rpc GetBusiness(GetBusinessRequest) returns (GetBusinessResponse);
+    rpc ListBusiness(ListBusinessRequest) returns (ListBusinessResponse);
+}
